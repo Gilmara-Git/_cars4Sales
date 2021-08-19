@@ -63,8 +63,8 @@
               if (response.message === "success") app.allCars();
               window.location.reload();
               // setTimeout(app.allCars(), 100)
-
               app.clearFields();
+
             }
           },
           false
