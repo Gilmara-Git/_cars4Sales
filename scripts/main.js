@@ -60,9 +60,23 @@
           function () {
             if (app.isReady.call(this)) {
               let response = JSON.parse(this.responseText);
+
               if (response.message === "success") app.allCars();
               window.location.reload();
-              // setTimeout(app.allCars(), 100)
+              // setTimeout(app.allCars(), 100
+              if (response.message === "success") {
+
+                app.allCars();
+                window.location.reload();
+
+                // window.location.reload();
+                // setTimeout(function(){
+                //   app.allCars();
+                //   window.location.href='http://127.0.0.1:5501/index.html'
+                // }, 100)
+
+              }
+
               app.clearFields();
 
             }
