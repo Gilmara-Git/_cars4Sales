@@ -60,20 +60,12 @@
           function () {
             if (app.isReady.call(this)) {
               let response = JSON.parse(this.responseText);
-
-              if (response.message === "success") app.allCars();
-              window.location.reload();
-              // setTimeout(app.allCars(), 100
               if (response.message === "success") {
 
                 app.allCars();
-                window.location.reload();
-
                 // window.location.reload();
-                // setTimeout(function(){
-                //   app.allCars();
-                //   window.location.href='http://127.0.0.1:5501/index.html'
-                // }, 100)
+
+              
 
               }
 
@@ -101,6 +93,7 @@
       },
       displayCars: function displayCars(cars) {
         let $fragment = document.createDocumentFragment();
+        let $trowChildren;
         cars.forEach(function (car) {
           let $trow = document.createElement("tr");
           let $tdImage = document.createElement("td");
@@ -122,7 +115,7 @@
           $tdColor.textContent = car.color;
           $tdDelete.appendChild(app.getDeleteIcon());
 
-          let $trowChildren = app.addTableData($trow, [
+          $trowChildren = app.addTableData($trow, [
             $tdImage,
             $tdMakeModel,
             $tdYear,
@@ -133,7 +126,9 @@
 
           $fragment.appendChild($trowChildren);
         });
-
+        
+        $fragment.removeChild($trowChildren);
+        $fragment.appendChild($trowChildren);
         return $fragment;
       },
 
