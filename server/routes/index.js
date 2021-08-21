@@ -12,13 +12,20 @@ router.get("/", function (req, res) {
 
 router.post("/", function (req, res) {
   let { image, makeModel, year, color, plate } = req.body;
+  let hasCar = data.some(function(car){    
+    return car.plate == plate.toUpperCase();
+  })
+  if(hasCar){
+    return res.json({ message: 'Placa já existe!'})
+  
+  } else {
 
   data.push({
     image: image,
     makeModel: makeModel,
     year: year,
     color: color,
-    plate: plate,
+    plate: plate.toUpperCase(),
   });
   console.log(
     "[POST] /car:",
@@ -31,7 +38,9 @@ router.post("/", function (req, res) {
       2
     )
   );
-  res.json({ message: "success" });
+  return res.json({ message: "success" });
+    }
+  
 });
 
 router.delete("/", function(req, res){
