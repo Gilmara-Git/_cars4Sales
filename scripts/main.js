@@ -6,10 +6,9 @@
       init: function init() {
         this.companyInfo();
         this.initEvents();
-        this.inputFields();
-        this.getImage();
+        // this.inputFields();
+        // this.getImage();
         this.allCars();
-        
       },
       companyInfo: function companyInfo() {
         let ajax = new XMLHttpRequest();
@@ -62,14 +61,13 @@
             if (app.isReady.call(this)) {
               let response = JSON.parse(this.responseText);
               if (response.message === "success") {
-
                 app.allCars();
                 window.location.reload();
+              }else{
+                alert(response.message);
               }
-
-              app.clearFields();
-
             }
+            app.clearFields();
           },
           false
         );
@@ -84,8 +82,6 @@
         if (app.isReady.call(this)) {
           let cars;
           cars = JSON.parse(this.responseText);
-          console.log(cars
-            )
 
           let $tbody = $("tbody").get();
           $tbody.appendChild(app.displayCars(cars));
@@ -96,6 +92,7 @@
         let $trowChildren;
         cars.forEach(function (car) {
           let $trow = document.createElement("tr");
+          let $tdEdit = document.createElement("td");
           let $tdImage = document.createElement("td");
           $tdImage.className = "image";
           let $image = app.getImage(car.image);
@@ -108,6 +105,7 @@
 
           $tdDelete.addEventListener("click", app.deleteCarFrontend, false);
 
+          $tdEdit.appendChild(app.getEditIcon());
           $tdImage.appendChild($image);
           $tdMakeModel.textContent = car.makeModel;
           $tdYear.textContent = car.year;
@@ -116,6 +114,7 @@
           $tdDelete.appendChild(app.getDeleteIcon());
 
           $trowChildren = app.addTableData($trow, [
+            $tdEdit,
             $tdImage,
             $tdMakeModel,
             $tdYear,
@@ -126,7 +125,7 @@
 
           $fragment.appendChild($trowChildren);
         });
-        
+
         $fragment.removeChild($trowChildren);
         $fragment.appendChild($trowChildren);
         return $fragment;
@@ -140,11 +139,11 @@
       },
 
       clearFields: function clearFields() {
-        app.inputFields().$imageURL.value = "";
-        app.inputFields().$make.value = "";
-        app.inputFields().$year.value = "";
-        app.inputFields().$plate.value = "";
-        app.inputFields().$color.value = "";
+        app.inputFields().$imageURL = "";
+        app.inputFields().$make = "";
+        app.inputFields().$year = "";
+        app.inputFields().$plate = "";
+        app.inputFields().$color = "";
       },
       inputFields: function inputFields() {
         return {
@@ -160,6 +159,12 @@
         $image.setAttribute("src", url);
         return $image;
       },
+      getEditIcon: function getEditIcon() {
+        let i = document.createElement("i");
+        i.textContent = "edit";
+        i.className = "material-icons edit";
+        return i;
+      },
       getDeleteIcon: function getDeleteIcon() {
         let i = document.createElement("i");
         i.textContent = "delete";
@@ -167,13 +172,15 @@
         return i;
       },
       deleteCarFrontend: function deleteCarFrontend() {
-        let tr = this.parentNode;       
-        let plateNumber = tr.lastElementChild.previousElementSibling.previousElementSibling.textContent;
+        let tr = this.parentNode;
+        let plateNumber =
+          tr.lastElementChild.previousElementSibling.previousElementSibling
+            .textContent;
         tr.remove(this);
         app.deleteCarBackend(plateNumber);
       },
-      deleteCarBackend: function deleteCarBackend(plateNumber){ 
-        console.log('Fui chamado')      
+      deleteCarBackend: function deleteCarBackend(plateNumber) {
+        console.log("Fui chamado");
         let ajax = new XMLHttpRequest();
         let plate = plateNumber;
         ajax.open("DELETE", "http://localhost:3000/car", true);
@@ -181,20 +188,21 @@
           "Content-Type",
           "application/x-www-form-urlencoded"
         );
-        ajax.send("plate="+plate);
-        ajax.addEventListener("readystatechange", function(){
-          if(app.isReady.call(this)){
-           let response = JSON.parse(this.responseText);
-           if(response.message === 'success'){
-              app.allCars();
-              window.location.reload();
-
-           }
-          }
-        }, false);
-       
-
-      }
+        ajax.send("plate=" + plate);
+        ajax.addEventListener(
+          "readystatechange",
+          function () {
+            if (app.isReady.call(this)) {
+              let response = JSON.parse(this.responseText);
+              if (response.message === "success") {
+                app.allCars();
+                window.location.reload();
+              }
+            }
+          },
+          false
+        );
+      },
     };
   })();
 
