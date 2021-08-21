@@ -9,6 +9,7 @@
         this.inputFields();
         this.getImage();
         this.allCars();
+        
       },
       companyInfo: function companyInfo() {
         let ajax = new XMLHttpRequest();
@@ -37,7 +38,7 @@
         let fieldValue = app.inputFields();
 
         let ajax = new XMLHttpRequest();
-        ajax.open("POST", "http://localhost:3000/car");
+        ajax.open("POST", "http://localhost:3000/car", true);
         ajax.setRequestHeader(
           "Content-Type",
           "application/x-www-form-urlencoded"
@@ -63,10 +64,7 @@
               if (response.message === "success") {
 
                 app.allCars();
-                // window.location.reload();
-
-              
-
+                window.location.reload();
               }
 
               app.clearFields();
@@ -78,7 +76,7 @@
       },
       allCars: function allCars() {
         let ajax = new XMLHttpRequest();
-        ajax.open("GET", "http://localhost:3000/car");
+        ajax.open("GET", "http://localhost:3000/car", true);
         ajax.send();
         ajax.addEventListener("readystatechange", this.carsDetails, false);
       },
@@ -86,6 +84,8 @@
         if (app.isReady.call(this)) {
           let cars;
           cars = JSON.parse(this.responseText);
+          console.log(cars
+            )
 
           let $tbody = $("tbody").get();
           $tbody.appendChild(app.displayCars(cars));
@@ -106,7 +106,7 @@
           let $tdColor = document.createElement("td");
           let $tdDelete = document.createElement("td");
 
-          $tdDelete.addEventListener("click", app.deleteCar, false);
+          $tdDelete.addEventListener("click", app.deleteCarFrontend, false);
 
           $tdImage.appendChild($image);
           $tdMakeModel.textContent = car.makeModel;
@@ -166,9 +166,35 @@
         i.className = "material-icons";
         return i;
       },
-      deleteCar: function deleteCar() {
-        this.parentNode.remove(this);
+      deleteCarFrontend: function deleteCarFrontend() {
+        let tr = this.parentNode;       
+        let plateNumber = tr.lastElementChild.previousElementSibling.previousElementSibling.textContent;
+        tr.remove(this);
+        app.deleteCarBackend(plateNumber);
       },
+      deleteCarBackend: function deleteCarBackend(plateNumber){ 
+        console.log('Fui chamado')      
+        let ajax = new XMLHttpRequest();
+        let plate = plateNumber;
+        ajax.open("DELETE", "http://localhost:3000/car", true);
+        ajax.setRequestHeader(
+          "Content-Type",
+          "application/x-www-form-urlencoded"
+        );
+        ajax.send("plate="+plate);
+        ajax.addEventListener("readystatechange", function(){
+          if(app.isReady.call(this)){
+           let response = JSON.parse(this.responseText);
+           if(response.message === 'success'){
+              app.allCars();
+              window.location.reload();
+
+           }
+          }
+        }, false);
+       
+
+      }
     };
   })();
 
