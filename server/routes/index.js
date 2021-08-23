@@ -4,7 +4,6 @@ let router = express.Router();
 
 let data = [];
 
-
 router.get("/", function (req, res) {
   console.log("[GET]/car:", data);
   res.json(data);
@@ -12,49 +11,41 @@ router.get("/", function (req, res) {
 
 router.post("/", function (req, res) {
   let { image, makeModel, year, color, plate } = req.body;
-  let hasCar = data.some(function(car){    
+  let hasCar = data.some(function (car) {
     return car.plate == plate.toUpperCase();
-  })
-  if(hasCar){
-    return res.json({ message: 'Placa já existe!'})
-  
+  });
+  if (hasCar) {
+    return res.json({ message: "Placa já existe!" });
   } else {
+    data.push({
+      image: image,
+      makeModel: makeModel,
+      year: year,
+      color: color,
+      plate: plate.toUpperCase(),
+    });
+    console.log(
+      "[POST] /car:",
+      JSON.stringify(
+        {
+          body: req.body,
+          data,
+        },
+        null,
+        2
+      )
+    );
+    return res.json({ message: "success" });
+  }
+});
 
-  data.push({
-    image: image,
-    makeModel: makeModel,
-    year: year,
-    color: color,
-    plate: plate.toUpperCase(),
+router.delete("/", function (req, res) {
+  let plate = req.body.plate;
+  data = data.filter(function (car) {
+    return car.plate !== plate;
   });
-  console.log(
-    "[POST] /car:",
-    JSON.stringify(
-      {
-        body: req.body,
-        data,
-      },
-      null,
-      2
-    )
-  );
+
   return res.json({ message: "success" });
-    }
-  
 });
-
-router.delete("/", function(req, res){
-  let plate =  req.body.plate;
-    data = data.filter(function(car){   
-      return car.plate !==  plate;
-  });
-  console.log(data, 'array atualizado')
-
-  return res.json({ message: "success" })
-  // console.log('ttttt',retorno, 'retorno')
-  // console.log('plate being deleted', plate)
-  // console.log(JSON.stringify({body: req.body }, null, 2))
-});
-
 
 module.exports = router;

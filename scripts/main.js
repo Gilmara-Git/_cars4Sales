@@ -6,8 +6,6 @@
       init: function init() {
         this.companyInfo();
         this.initEvents();
-        // this.inputFields();
-        // this.getImage();
         this.allCars();
       },
       companyInfo: function companyInfo() {
@@ -63,7 +61,7 @@
               if (response.message === "success") {
                 app.allCars();
                 window.location.reload();
-              }else{
+              } else {
                 alert(response.message);
               }
             }
@@ -92,7 +90,6 @@
         let $trowChildren;
         cars.forEach(function (car) {
           let $trow = document.createElement("tr");
-          let $tdEdit = document.createElement("td");
           let $tdImage = document.createElement("td");
           $tdImage.className = "image";
           let $image = app.getImage(car.image);
@@ -105,7 +102,6 @@
 
           $tdDelete.addEventListener("click", app.deleteCarFrontend, false);
 
-          $tdEdit.appendChild(app.getEditIcon());
           $tdImage.appendChild($image);
           $tdMakeModel.textContent = car.makeModel;
           $tdYear.textContent = car.year;
@@ -114,7 +110,6 @@
           $tdDelete.appendChild(app.getDeleteIcon());
 
           $trowChildren = app.addTableData($trow, [
-            $tdEdit,
             $tdImage,
             $tdMakeModel,
             $tdYear,
@@ -159,12 +154,6 @@
         $image.setAttribute("src", url);
         return $image;
       },
-      getEditIcon: function getEditIcon() {
-        let i = document.createElement("i");
-        i.textContent = "edit";
-        i.className = "material-icons edit";
-        return i;
-      },
       getDeleteIcon: function getDeleteIcon() {
         let i = document.createElement("i");
         i.textContent = "delete";
@@ -173,16 +162,15 @@
       },
       deleteCarFrontend: function deleteCarFrontend() {
         let tr = this.parentNode;
+        tr.remove(this);
         let plateNumber =
           tr.lastElementChild.previousElementSibling.previousElementSibling
             .textContent;
-        tr.remove(this);
         app.deleteCarBackend(plateNumber);
       },
       deleteCarBackend: function deleteCarBackend(plateNumber) {
-        console.log("Fui chamado");
-        let ajax = new XMLHttpRequest();
         let plate = plateNumber;
+        let ajax = new XMLHttpRequest();
         ajax.open("DELETE", "http://localhost:3000/car", true);
         ajax.setRequestHeader(
           "Content-Type",
