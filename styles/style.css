@@ -1,31 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;700&family=WindSong&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;700&family=WindSong&display=swap");
 
-*{
-    margin: 0;
-    padding: 0;
-    border: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
 }
 
 :root {
-  --darker-orange: #FF8C00;
-  --linear-contrast: #F5F5DC;
-  --body-fontColor: rgba(0,0,0,0.9);
-  --h1-color: rgba(0,0,0,0.8);
-  --placeholder-color: rgba(0,0,0,0.5);
-  --input-color: rgba(0,0,0,1.5);
-  --button-color: rgba(0,0,0,1.8);
+  --darker-orange: #ff8c00;
+  --linear-contrast: #f5f5dc;
+  --body-fontColor: rgba(0, 0, 0, 0.9);
+  --h1-color: rgba(0, 0, 0, 0.8);
+  --placeholder-color: rgba(0, 0, 0, 0.5);
+  --input-color: rgba(0, 0, 0, 1.5);
+  --button-color: rgba(0, 0, 0, 1.8);
   --edit-background: green;
   --remove-background: red;
 }
 
 body {
-  font-family:'Roboto Slab', serif;
+  font-family: "Roboto Slab", serif;
   color: var(--body-fontColor);
 }
 
 main {
-  background: linear-gradient(to bottom right, var(--darker-orange), var(--linear-contrast));
+  background: linear-gradient(
+    to bottom right,
+    var(--darker-orange),
+    var(--linear-contrast)
+  );
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -40,9 +44,9 @@ main header {
   margin-bottom: 2rem;
 }
 
-main h1{
+main h1 {
   font-size: 3.5rem;
-  font-family: 'WindSong', cursive;
+  font-family: "WindSong", cursive;
   color: var(--h1-color);
 }
 
@@ -50,19 +54,18 @@ main h4 {
   font-size: 1rem;
 }
 
-form[data-js="carRegistration"]{
+form[data-js="carRegistration"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-form[data-js="carRegistration"] input::placeholder{
-  color: var( --placeholder-color);
+form[data-js="carRegistration"] input::placeholder {
+  color: var(--placeholder-color);
 }
 
-
-form[data-js="carRegistration"] span{
+form[data-js="carRegistration"] span {
   font-weight: bold;
   font-size: 1.3rem;
   margin-bottom: 0.4rem;
@@ -71,34 +74,32 @@ form[data-js="carRegistration"] span{
 
 form[data-js="carRegistration"] input {
   border-radius: 0.2rem;
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.2);
   box-shadow: 0.01rem 0.01rem 0.01rem 0.1rem var(--darker-orange);
-  color:  var(--input-color);
+  color: var(--input-color);
   font-weight: bold;
   text-align: center;
   margin-right: 0.6rem;
-  width:12rem;
-
+  width: 12rem;
 }
 
-form[data-js="carRegistration"] input:hover{
-  background-color: rgba(0,0,0,0.4);
+form[data-js="carRegistration"] input:hover {
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
-div[data-js="cars-details"]{
-  display:flex;
+div[data-js="cars-details"] {
+  display: flex;
 }
 
-.display-column{
+.display-column {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-bottom: 1rem;
-
 }
 
-div[data-js="image"] input[type="url"]{
+div[data-js="image"] input[type="url"] {
   width: 20rem;
 }
 
@@ -112,7 +113,7 @@ form[data-js="carRegistration"] button {
   height: 1.8rem;
   border-radius: 0.2rem;
   color: var(--button-color);
-  border: 0.01rem solid rgba(0,0,0,1);
+  border: 0.01rem solid rgba(0, 0, 0, 1);
   cursor: pointer;
   transition: 800ms;
   font-weight: bold;
@@ -120,51 +121,42 @@ form[data-js="carRegistration"] button {
   padding: 0.1rem;
 }
 
-form[data-js="carRegistration"] button:hover{
-  background-color:  rgba(0,0,0,0.9);
+form[data-js="carRegistration"] button:hover {
+  background-color: rgba(0, 0, 0, 0.9);
   color: var(--darker-orange);
-  border: 0.01rem solid ;
+  border: 0.01rem solid;
   font-weight: bold;
 }
 
-div[data-js="table-container"]{
+div[data-js="table-container"] {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
 table {
   margin-top: 1rem;
-  border: 0.1rem solid rgba(0,0,0,0.5);
+  border: 0.1rem solid rgba(0, 0, 0, 0.5);
   width: 30rem;
 }
 
-table thead{
+table thead {
   background-color: var(--darker-orange);
   transition: 800ms;
   font-size: 1rem;
-} 
-
-table thead [data-js="edit"]{
-  background-color: var(--edit-background);
-  color: var(--linear-contrast);
-  font-weight: normal;  
 }
 
-table thead [data-js="edit"]:hover{
-  font-weight: bold;
-}
-table thead [data-js="remove"]{
-  background-color:var(--remove-background);
+table thead [data-js="remove"] {
+  background-color: var(--remove-background);
   color: var(--linear-contrast);
-  font-weight: normal;  
+  font-weight: normal;
 }
-table thead [data-js="remove"]:hover{
+table thead [data-js="remove"]:hover {
   font-weight: bold;
 }
 
 table thead:hover {
-  background-color:var(--linear-contrast);
- }
+  background-color: var(--linear-contrast);
+}
 
 table td {
   font-weight: 300;
@@ -172,14 +164,13 @@ table td {
   text-align: center;
 }
 
-table tr td.image{
+table tr td.image {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
-table tr td.image img:hover{
+table tr td.image img:hover {
   transform: scale(5.5);
   background-size: cover;
 }
@@ -187,10 +178,9 @@ table tr td.image img:hover{
 table img {
   width: 1.5rem;
   height: 1.5rem;
-  background-size:  contain;
+  background-size: contain;
   border-radius: 0.3rem;
   padding: 0.1rem;
-
 }
 table tr td i.material-icons.edit {
   font-size: 1rem;
@@ -208,13 +198,12 @@ table tr td i.material-icons {
   justify-content: center;
   cursor: pointer;
 }
-table tr td i.material-icons:hover{
-  color:var(--linear-contrast);
+table tr td i.material-icons:hover {
+  color: var(--linear-contrast);
 }
 
-
-@media(max-width: 850px){
-  div[data-js="cars-details"]{ 
+@media (max-width: 850px) {
+  div[data-js="cars-details"] {
     flex-direction: column;
   }
 }
