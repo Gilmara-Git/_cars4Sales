@@ -2,6 +2,7 @@
   "use strict";
 
   let app = (function appController() {
+    let $tbody = $("tbody").get();
     return {
       init: function init() {
         this.companyInfo();
@@ -59,8 +60,8 @@
             if (app.isReady.call(this)) {
               let response = JSON.parse(this.responseText);
               if (response.message === "success") {
+                $tbody.innerHTML = "";
                 app.allCars();
-                window.location.reload();
               } else {
                 alert(response.message);
               }
@@ -81,7 +82,7 @@
           let cars;
           cars = JSON.parse(this.responseText);
 
-          let $tbody = $("tbody").get();
+
           $tbody.appendChild(app.displayCars(cars));
         }
       },
@@ -183,8 +184,8 @@
             if (app.isReady.call(this)) {
               let response = JSON.parse(this.responseText);
               if (response.message === "success") {
+                $tbody.innerHTML = "";
                 app.allCars();
-                window.location.reload();
               }
             }
           },
