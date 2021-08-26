@@ -11,8 +11,9 @@ router.get("/", function (req, res) {
 
 router.post("/", function (req, res) {
   let { image, makeModel, year, color, plate } = req.body;
+  console.log(typeof plate, " tipo da placa", plate)
   let hasCar = data.some(function (car) {
-    return car.plate == plate.toUpperCase();
+    return car.plate === plate.toUpperCase();
   });
   if (hasCar) {
     return res.json({ message: "Placa já existe!" });
