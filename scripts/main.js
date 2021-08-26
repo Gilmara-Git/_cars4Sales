@@ -15,7 +15,6 @@
         ajax.send();
         ajax.addEventListener("readystatechange", this.getCompanyInfo, false);
       },
-
       getCompanyInfo: function getCompanyInfo() {
         if (!app.isReady.call(this)) return;
 
@@ -126,14 +125,12 @@
         $fragment.appendChild($trowChildren);
         return $fragment;
       },
-
       addTableData: function addTableData(trow, elements) {
         for (let element of elements) {
           trow.appendChild(element);
         }
         return trow;
       },
-
       clearFields: function clearFields() {
         app.inputFields().$imageURL = "";
         app.inputFields().$make = "";
